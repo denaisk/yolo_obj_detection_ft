@@ -1,14 +1,17 @@
 from ultralytics import YOLO
 import cv2
 import os
+import random
 
 model = YOLO("weights/yolo_best.pt")
 demo_folder = "demo_images"
 
-images = sorted([f for f in os.listdir(demo_folder) 
-                 if f.lower().endswith((".jpg", ".jpeg", ".png"))])[:5]
+images = [f for f in os.listdir(demo_folder) 
+          if f.lower().endswith((".jpg", ".jpeg", ".png"))]
 
-for img_file in images:
+images_to_show = random.sample(images, min(5, len(images)))
+
+for img_file in images_to_show:
     img_path = os.path.join(demo_folder, img_file)
     results = model(img_path)
     
